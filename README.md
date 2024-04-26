@@ -18,7 +18,7 @@ Binary prediction is a common econometric tool that can be done in several ways.
 
  ### LPM
 One possible way to handle a binary dependent variable is through a linear probability model. This is done by essentially running an OLS regression,
- Y=1 | X=xi =x'β
+ Pr(Y=1 | X=$x_i$) =x'β
 where Y is interpreted as the probability of our outcome being 1 and our β as the marginal effect of a 1 unit increase in xi.
 Advantages of the linear probability model include its computational efficiency and well-understood implications. Since it is just a normal regression, we can calculate  by simply applying our existing OLS formula,
 b=(X'X)-1XY
