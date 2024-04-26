@@ -18,25 +18,25 @@ Binary prediction is a common econometric tool that can be done in several ways.
 
  ### LPM
 One possible way to handle a binary dependent variable is through a linear probability model. This is done by essentially running an OLS regression,
- Pr(Y=1 | X=$x_i$) =x'β
-where Y is interpreted as the probability of our outcome being 1 and our β as the marginal effect of a 1 unit increase in xi.
+ $$Pr(Y=1 | X=x_i) =x'β$$
+where Y is interpreted as the probability of our outcome being 1 and our β as the marginal effect of a 1 unit increase in $x_i$.
 Advantages of the linear probability model include its computational efficiency and well-understood implications. Since it is just a normal regression, we can calculate  by simply applying our existing OLS formula,
-b=(X'X)-1XY
- This estimator shares all understood properties of OLS, including unbiasedness, efficiency, and asymptotic normality. However, there are clear drawbacks to using an OLS regression to predict a binary outcome. One obvious issue is the presence of nonsensical predictions. By construction, OLS assumes an unconstrained and continuous outcome variable. So, for extreme values of xi, fitted values will be above 1 and below 0. It also will assume a constant partial effect of any explanatory variable, even though it is likely that the effect of a change in xi may vary depending on its magnitude. Lastly, having a binary outcome variable will necessarily cause our estimator to be heteroskedastic, since the variance of a binary variable is  (Y=1 | Xi)(1-Pr⁡(Yi=1|Xi), and cannot be some 2 for all xi. Intuitively, since all observations have outcomes of either 1 or 0, but our linear model gives us fitted values somewhere between 1 and 0, (when they are sensical predictions) the size of our residuals will depend on our value of xi. This issue can be solved like other cases of heteroskedasticity by using robust standard errors.
+$$b=(X'X)^{-1}X'Y$$
+This estimator shares all understood properties of OLS, including unbiasedness, efficiency, and asymptotic normality. However, there are clear drawbacks to using an OLS regression to predict a binary outcome. One obvious issue is the presence of nonsensical predictions. By construction, OLS assumes an unconstrained and continuous outcome variable. So, for extreme values of $x_i$, fitted values will be above 1 and below 0. It also will assume a constant partial effect of any explanatory variable, even though it is likely that the effect of a change in $x_i$ may vary depending on its magnitude. Lastly, having a binary outcome variable will necessarily cause our estimator to be heteroskedastic, since the variance of a binary variable is  $(Y=1 | X_i)(1-Pr⁡(Y_i=1|X_i)$, and cannot be some $\sigma^2$ for all $x_i$. Intuitively, since all observations have outcomes of either 1 or 0, but our linear model gives us fitted values somewhere between 1 and 0, (when they are sensical predictions) the size of our residuals will depend on our value of xi. This issue can be solved like other cases of heteroskedasticity by using robust standard errors.
  
 An effective way to address the issues of Linear Probability ability estimation is by using MLE estimation. MLE is a type of M-estimator, where we have some likelihood function representing the joint distribution of the observed data and our parameters. For computational reasons, we often use the log-likelihood function, 
-L|X =i=1n g(xiβ) 
-Where g(xi) is the underlying density function of our data. In this case, our MLE estimator is given by,
-b=maxbi=1n g(xiβ)    
+$$ln(L(β|X) =\sum_{i=1}^{n} ln(g(x_iβ))$$
+Where $g(x_i)$ is the underlying density function of our data. In this case, our MLE estimator is given by,
+$$\hat{b} = \arg \max_{b}  \sum_{i=1}^{n} ln(g(x_iβ))$$  
 
 Similarly to other M-estimators, our MLE estimator is consistent and asymptotically normal. To perform MLE estimation, we need to make an assumption about the underlying distribution of our data. We will look at two options, Probit and Logit estimation. 
 
 ### Probit
-Probit estimation assumes that our distribution gxβ=(xβ) (standard normal CDF). Because the values given by the CDF function will always be bounded between 0 and 1, our first issue with our linear probability model, nonsensical predictions, is avoided when using Probit. It also allows for nonlinear trends in our data, allowing for a potentially better fit than the traditional LPM. 
+Probit estimation assumes that our distribution $g(xβ)=\Phi(xβ)$ (standard normal CDF). Because the values given by the CDF function will always be bounded between 0 and 1, our first issue with our linear probability model, nonsensical predictions, is avoided when using Probit. It also allows for nonlinear trends in our data, allowing for a potentially better fit than the traditional LPM. 
 
 ### Logit
-Logit estimation works similar to Probit, but instead of the standard normal CDF, our underlying distribution is assumed to be,
-gxβ=exβ1+exβ
+Logit estimation works similar to Probit, but instead of the standard normal CDF, our underlying distribution is assumed to be
+$$g(X'β)=\frac{\exp(X'β)}{1+exp(X'β)}$$
 It can be seen that, like Probit, our logit estimator is bounded between 1 and 0. It also allows for nonlinear trends in our data. There is no consensus on which is the “better” estimator. One possible advantage of Logit is it is more computationally efficient than Probit. It also will generally have fatter tails, so it will approach 0 and 1 slightly slower, adding robustness to our model. Ultimately, whichever estimator is closer to the true underlying distribution should give a more accurate estimate.
 
 ### Literature Review
@@ -52,10 +52,10 @@ Although logit and probit are nearly identical in their estimates, Noreen (1988)
 ### Research Design
 To further test the properties and performance of the linear probability, logit, and probit models, we wrote linear probability, logit, and probit models and estimated models for data generated using a modified version of Julian Winkel and Tobias Krebs’ Python package Opossum. 
 For the linear probability model, we used the classic closed-form solution 
-b=(X'X)-1XY
- to identify the coefficients that minimize the sum of squared error, which coefficients in the case of ordinary least squares also minimize the negative log-likelihood of the least squares model based upon the strong assumption that the error term in the model, , is normally distributed with mean zero and constant variance 2.
+$$b=(X'X)^{-1}X'Y$$
+ to identify the coefficients that minimize the sum of squared error, which coefficients in the case of ordinary least squares also minimize the negative log-likelihood of the least squares model based upon the strong assumption that the error term in the model, $\epsilon$, is normally distributed with mean zero and constant variance $\sigma^2$.
 For the logit model, we use maximum likelihood estimation to solve for the unique parameters that minimize the negative log-likelihood of the logistic model, which posits that event likelihood is linked to the logistic function.  For the probit model, we adopt a similar approach. Using maximum likelihood estimation, we solve for the unique parameters that minimize the negative log-likelihood of the joint likelihoods of each observation in the entire sample characterized by the standard normal cumulative distribution function. 
-Specifically, to successfully minimize the log-likelihood functions of the logit and probit models, we use the L-BFGS-B gradient descent algorithm provided by the popular Python package Scipy to numerically estimate the coefficients,  b . 
+Specifically, to successfully minimize the log-likelihood functions of the logit and probit models, we use the L-BFGS-B gradient descent algorithm provided by the popular Python package Scipy to numerically estimate the coefficients,  $\hat{b}$ . 
 The covariate data used in our model is sampled randomly from a multivariate normal distribution with mean zero and variance , where  is a positive definite matrix constructed from a uniform distribution multiplied element-wise with an overlay matrix consisting of random values in the set {-1, 1} to allow for some covariates with negative correlation.
 The outcome variable in our data is linearly related to the covariates in our model. True coefficients are drawn from a beta distribution and then linearly combined with the covariates to generate a probability estimate for y. The probability estimates for y are clipped between .1 and .9, and then y is converted to a binary outcome via draws from a Bernoulli distribution.  To create additional noise in our model, we apply both logistic and normal error terms to the linear combination of covariates and true coefficients before drawing outcome variable values from the Bernoulli distribution.
 
