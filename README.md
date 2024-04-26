@@ -77,6 +77,9 @@ By following an MLE and OLS framework we were able to replicate results from mod
  
 ## Works Cited
 Deke, John. “Using the Linear Probability Model to Estimate Impacts on Binary Outcomes in Randomized Controlled Trials.” Mathematica, https://mathematica.org/publications/using-the-linear-probability-model-to-estimate-impacts-on-binary-outcomes-in-randomized. 
+
 Noreen, Eric. “An Empirical Comparison of Probit and OLS Regression Hypothesis Tests.” Journal of Accounting Research, vol. 26, no. 1, 1988, p. 119., https://doi.org/10.2307/2491116. 
+
 Rosett, Richard N., and Forrest D. Nelson. “Estimation of the Two-Limit Probit Regression Model.” Econometrica, vol. 43, no. 1, 1975, p. 141., https://doi.org/10.2307/1913419. 
+
 Stone, Mary, and John Rasp. Tradeoffs in the Choice between Logit and OLS for Accounting Choice Studies. American Accounting Association, Jan. 1991, https://www.jstor.org/stable/247712. 
