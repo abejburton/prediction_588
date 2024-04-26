@@ -62,11 +62,15 @@ The outcome variable in our data is linearly related to the covariates in our mo
 ### Results
 Our models for logit, probit, and LPM performed well on the data that was generated. We tested the validity of the models we built by comparing their results to the results of their respective models in the SKLEARN package in Python. Our coefficients and mean squared error matched the results of those models which are from a commonly used package. The general performance of our models was encouraging, and the results of testing their assumptions on the data were for the most part consistent with what we expected.
 
-# INSERT TABLE
+| Model / Data Type               | Logit Model Performance         | Probit Model Performance       | LPM Model Performance          |
+|---------------------------------|---------------------------------|--------------------------------|--------------------------------|
+| **Data with normal error**      | R-squared: 0.53<br>β: [-.08, -.18, -.17] | R-squared: 0.51<br>β: [.48, -.03, -.03] | R-squared: 0.50<br>β: [.48, -.03, -.03] |
+| **Data with logistic error**    | R-squared: 0.525<br>β: [.62, -.059, .019] | R-squared: 0.502<br>β: [.64, -.01, .004] | R-squared: -0.523<br>β: [.64, -.01, .004] |
+
 
 Consistent with the theory, logistic regression performed the best of the three when the data had a logistic error term. Probit and LPM gave similar results to each other and both were worse than logit. Probit did better on the data with the normal error term than it did with logit, which also is what we would have expected in the beginning. However, logit still outperformed both other models on the data with normal error where we would have thought probit would do better. This could be due to the phenomena identified by Noreen that logit does better with smaller sample sizes than probit. For the most part, these results conform to our expectations of how the models should perform based on the theory they were based on.
 
-# INSERT GRAPH
+
 ### Conclusion
 	
 By following an MLE and OLS framework we were able to replicate results from models that are commonly used by the Python community. Our results supported the theory that the distribution of the error term is an important factor in the model performance of logit and probit. Even though logit did better in all cases, each model performed its individual best when matched to its theoretical best error. Further research could be done to test the circumstances that lead to logit’s high performance in this simulation. LPM is useful for its computational ease and interpretability but is not the best model because of its potential for nonsensical output and its slight disadvantage in predictive power in some cases. Our results are for the most part an encouraging affirmation of the theory that inspired this simulation research from the beginning.
