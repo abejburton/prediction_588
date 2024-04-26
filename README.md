@@ -18,16 +18,16 @@ Binary prediction is a common econometric tool that can be done in several ways.
 
  ### LPM
 One possible way to handle a binary dependent variable is through a linear probability model. This is done by essentially running an OLS regression,
- $$Pr(Y=1 | X=x_i) =x'β$$
+ $$Pr(Y=1 | X=x_i) =x_i'β$$
 where Y is interpreted as the probability of our outcome being 1 and our β as the marginal effect of a 1 unit increase in $x_i$.
 Advantages of the linear probability model include its computational efficiency and well-understood implications. Since it is just a normal regression, we can calculate  by simply applying our existing OLS formula,
 $$b=(X'X)^{-1}X'Y$$
 This estimator shares all understood properties of OLS, including unbiasedness, efficiency, and asymptotic normality. However, there are clear drawbacks to using an OLS regression to predict a binary outcome. One obvious issue is the presence of nonsensical predictions. By construction, OLS assumes an unconstrained and continuous outcome variable. So, for extreme values of $x_i$, fitted values will be above 1 and below 0. It also will assume a constant partial effect of any explanatory variable, even though it is likely that the effect of a change in $x_i$ may vary depending on its magnitude. Lastly, having a binary outcome variable will necessarily cause our estimator to be heteroskedastic, since the variance of a binary variable is  $(Y=1 | X_i)(1-Pr⁡(Y_i=1|X_i)$, and cannot be some $\sigma^2$ for all $x_i$. Intuitively, since all observations have outcomes of either 1 or 0, but our linear model gives us fitted values somewhere between 1 and 0, (when they are sensical predictions) the size of our residuals will depend on our value of xi. This issue can be solved like other cases of heteroskedasticity by using robust standard errors.
  
 An effective way to address the issues of Linear Probability ability estimation is by using MLE estimation. MLE is a type of M-estimator, where we have some likelihood function representing the joint distribution of the observed data and our parameters. For computational reasons, we often use the log-likelihood function, 
-$$ln(L(β|X) =\sum_{i=1}^{n} ln(g(x_iβ))$$
+$$ln(L(β|X) =\sum_{i=1}^{n} ln(g(x_i'β))$$
 Where $g(x_i)$ is the underlying density function of our data. In this case, our MLE estimator is given by,
-$$\hat{b} = \arg \max_{b}  \sum_{i=1}^{n} ln(g(x_iβ))$$  
+$$\hat{b} = \arg \max_{b}  \sum_{i=1}^{n} ln(g(x_i'β))$$  
 
 Similarly to other M-estimators, our MLE estimator is consistent and asymptotically normal. To perform MLE estimation, we need to make an assumption about the underlying distribution of our data. We will look at two options, Probit and Logit estimation. 
 
@@ -36,7 +36,7 @@ Probit estimation assumes that our distribution $g(xβ)=\Phi(xβ)$ (standard nor
 
 ### Logit
 Logit estimation works similar to Probit, but instead of the standard normal CDF, our underlying distribution is assumed to be
-$$g(X'β)=\frac{\exp(X'β)}{1+exp(X'β)}$$
+$$g(xβ)=\frac{\exp(xβ)}{1+exp(xβ)}$$
 It can be seen that, like Probit, our logit estimator is bounded between 1 and 0. It also allows for nonlinear trends in our data. There is no consensus on which is the “better” estimator. One possible advantage of Logit is it is more computationally efficient than Probit. It also will generally have fatter tails, so it will approach 0 and 1 slightly slower, adding robustness to our model. Ultimately, whichever estimator is closer to the true underlying distribution should give a more accurate estimate.
 
 ### Literature Review
