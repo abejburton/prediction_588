@@ -76,7 +76,13 @@ Consistent with the theory, logistic regression performed the best of the three 
 By following an MLE and OLS framework we were able to replicate results from models that are commonly used by the Python community. Our results supported the theory that the distribution of the error term is an important factor in the model performance of logit and probit. Even though logit did better in all cases, each model performed its individual best when matched to its theoretical best error. Further research could be done to test the circumstances that lead to logit’s high performance in this simulation. LPM is useful for its computational ease and interpretability but is not the best model because of its potential for nonsensical output and its slight disadvantage in predictive power in some cases. Our results are for the most part an encouraging affirmation of the theory that inspired this simulation research from the beginning.
 
 
+![LPM](output/linreg.png)
 
+![Logit](output/logreg.png)
+
+![Probit](output/probreg.png)
+
+![Combined](output/stackedreg.png)
 
  
 ## Works Cited
